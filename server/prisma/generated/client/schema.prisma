@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+    // Enable logging for Prisma queries
+  debug    = true
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGO_URL")
+}
+
+model Question {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  language         String   
+  question         String   
+  options          String[]
+  answer           String   
+  difficulty       String   
+  difficultyLevel  Int      
+  point            Int      
+  excerciseNumber  Int      
+  createdAt        DateTime @default(now()) @map("createdAt") 
+  updatedAt        DateTime @updatedAt @map("updatedAt")
+}
