@@ -67,6 +67,9 @@ const addMockData = async () => {
   }
 };
 
+app.get('/', (req, res)=>{
+  return res.json({status:"true"})
+});
 //routes
 app.use('/v1/question', questionRoute);
 
