@@ -4,13 +4,13 @@ This is a full-stack web application that allows users to test their api on web.
 **The mock data for api testing can be found in server/data/data.json.**
 
 **Demo APIS:**
-   -**GET: https://apis-testing-ashy.vercel.app/v1/question/questions + optionally you can add query params as well**
+   1. **GET: https://apis-testing-ashy.vercel.app/v1/question/questions + optionally you can add query params as well**
       ```bash
          page = 1
          limit = 10
       ```
-   -**GET: https://apis-testing-ashy.vercel.app/v1/question/questions/65c11cf55f3d7e4503ed5a4d**
-   -**POST: https://apis-testing-ashy.vercel.app/v1/question/questions + Put below json in body**
+   2. **GET: https://apis-testing-ashy.vercel.app/v1/question/questions/65c11cf55f3d7e4503ed5a4d**
+   3. **POST: https://apis-testing-ashy.vercel.app/v1/question/questions + Put below json in body**
       ```bash
       {
          "language": "Hindi",
@@ -28,13 +28,13 @@ This is a full-stack web application that allows users to test their api on web.
          "excerciseNumber": 1,
       }
       ```
-   -**PUT: https://apis-testing-ashy.vercel.app/v1/question/65c11cf55f3d7e4503ed5a4d + put some data in body to update**
+   4. **PUT: https://apis-testing-ashy.vercel.app/v1/question/65c11cf55f3d7e4503ed5a4d + put some data in body to update**
       ```bash
       {
          "language": "English",
       }
       ```
-   -**DELETE: https://apis-testing-ashy.vercel.app/v1/question/questions/65c11cf55f3d7e4503ed5a4d**
+   5. **DELETE: https://apis-testing-ashy.vercel.app/v1/question/questions/65c11cf55f3d7e4503ed5a4d**
    
 
 
