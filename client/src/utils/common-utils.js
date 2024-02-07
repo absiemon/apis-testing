@@ -16,6 +16,10 @@ export const checkParams = (formData, jsonText, paramData, headerData, setErrorM
         return false;
     }
 
+    if(!jsonText && (formData.type === 'POST' || formData.type === 'PUT')){
+        setErrorMsg('Text is not valid json');
+        return false;
+    }
     if(!checkValidJson(jsonText)) {
         setErrorMsg('Text is not valid json');
         return false;

@@ -28,10 +28,10 @@ const AddRow = ({ addRows, rowId, data, setData }) => {
             let isAdded = false
             for (let obj of newData) {
                 if(obj.check && isAdded){
-                    newUrl += '&' + obj?.key + '=' + (obj?.value || '')
+                    obj?.key && (newUrl += '&' + (obj?.key || '') + '=' + (obj?.value || ''))
                 }
                 else if(obj.check){
-                    newUrl += '?' + obj?.key + '=' + (obj?.value || '')
+                    obj?.key && (newUrl += '?' + (obj?.key || '') + '=' + (obj?.value || ''))
                     isAdded  = true
                 }
             }
@@ -42,8 +42,10 @@ const AddRow = ({ addRows, rowId, data, setData }) => {
         
         if (!checkCheckbox) {
             setCheckCheckbox(true);
-            addRows(oldArr => [...oldArr, rowId]);
-            result = { ...result, id: rowId, check: true }
+            if(rowId === newData.length){
+                addRows(oldArr => [...oldArr, rowId]);
+                result = { ...result, id: rowId, check: true }
+            }
         } else {
             setCheckCheckbox(false);
             result = { ...result, id: rowId, check: false }
@@ -91,10 +93,10 @@ const AddRow = ({ addRows, rowId, data, setData }) => {
             let isAdded = false
             for (let obj of newData) {
                 if(obj.check && isAdded){
-                    newUrl += '&' + obj?.key + '=' + (obj?.value || '')
+                    obj?.key && (newUrl += '&' + (obj?.key || '') + '=' + (obj?.value || ''))
                 }
                 else if(obj.check){
-                    newUrl += '?' + obj?.key + '=' + (obj?.value || '')
+                    obj?.key && (newUrl += '?' + (obj?.key || '') + '=' + (obj?.value || ''))
                     isAdded  = true
                 }
             }

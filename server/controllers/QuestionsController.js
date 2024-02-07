@@ -4,22 +4,33 @@ const prisma = new PrismaClient();
 // Get all questions
 const getAllQuestions = async (req, res) => {
   try {
-    const questions = await prisma.question.findMany();
-    return res.status(200).json({status:true, data:questions});
+    const page = parseInt(req.query.page) || 1; // Default to page 1 if not specified
+    const itemsPerPage = parseInt(req.query.limit) || 10; // Default to 10 items per page if not specified
+
+    const offset = (page - 1) * itemsPerPage;
+
+    //total number of pages
+    const totalQuestions = await prisma.question.count();
+    const totalPages = Math.ceil(totalQuestions / itemsPerPage);
+    
+    const questions = await prisma.question.findMany({
+      take: itemsPerPage,
+      skip: offset,
+    });
+
+    return res.status(200).json({ status: true, data: questions,  totalPages});
 
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: "Internal server error", details: error });
+    return res.status(500).json({ error: "Internal server error", details: error });
   }
 };
 
 // Get a single question by ID
 const getQuestionById = async (req, res) => {
-  const { id } = req.params;
+  const  id = req.params.id;
   try {
     const question = await prisma.question.findUnique({
-      where: { _id: id },
+      where: { id: id },
     });
 
     if (!question) {
@@ -38,11 +49,18 @@ const getQuestionById = async (req, res) => {
 
 // Create a new question
 const createQuestion = async (req, res) => {
-  const { text, options, answer, difficulty, difficultyLevel, point, excerciseNumber } = req.body;
-
+   const rawData = req.body;
+    // Check if the request body is empty
+    if (!rawData || Object.keys(rawData).length === 0) {
+      return res.status(400).json({ status: false, error: 'Empty request body' });
+    }
+   
+   console.log(rawData)
+   const { language, question, options, answer, difficulty, difficultyLevel, point, excerciseNumber } = rawData
    // Check for missing fields
    const missingFields = [];
-   if (!text) missingFields.push('text');
+   if (!language) missingFields.push('language');
+   if (!question) missingFields.push('question');
    if (!options) missingFields.push('options');
    if (!answer) missingFields.push('answer');
    if (!difficulty) missingFields.push('difficulty');
@@ -57,7 +75,8 @@ const createQuestion = async (req, res) => {
   try {
     const newQuestion = await prisma.question.create({
       data: {
-        text,
+        language,
+        question,
         options,
         answer,
         difficulty,
@@ -78,12 +97,14 @@ const createQuestion = async (req, res) => {
 
 // Update a question by ID
 const updateQuestion = async (req, res) => {
-  const { id } = req.params;
-  const dataToUpdate = req.body;
+  const id = req.params.id;
+  const rawData = req.body;
+  console.log(Object.keys(rawData)[0])
+  const dataToUpdate = Object.keys(rawData)[0]
 
   try {
     const updatedQuestion = await prisma.question.update({
-      where: { _id: id },
+      where: { id: id },
       data: dataToUpdate
     });
 
@@ -97,14 +118,14 @@ const updateQuestion = async (req, res) => {
 
 // Delete a question by ID
 const deleteQuestion = async (req, res) => {
-  const { id } = req.params;
+  const id = req.params.id;
 
   try {
     const deletedQuestion = await prisma.question.delete({
-      where: { _id: id },
+      where: { id: id },
     });
 
-    res.json(deletedQuestion);
+    return res.status(200).json({status:true, message:"Deleted succesfully"});
   } catch (error) {
     return res
     .status(500)

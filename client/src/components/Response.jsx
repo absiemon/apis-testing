@@ -10,7 +10,8 @@ const textareaStyle = {
     backgroundRepeat: 'no-repeat',
     paddingLeft: 35,
     paddingTop: 10,
-    border: '1px solid #bae6fd' 
+    border: '1px solid #bae6fd',
+    height:'240px'
 
 }
 

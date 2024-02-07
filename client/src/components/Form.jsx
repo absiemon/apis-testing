@@ -36,8 +36,8 @@ const Form = ({ onSendClick }) => {
         label="POST"
         onChange={(e) => handleChange(e)}
       >
-        <MenuItem value={"POST"}>POST</MenuItem>
         <MenuItem value={"GET"}>GET</MenuItem>
+        <MenuItem value={"POST"}>POST</MenuItem>
         <MenuItem value={"PUT"}>PUT</MenuItem>
         <MenuItem value={"DELETE"}>DELETE</MenuItem>
       </Select>

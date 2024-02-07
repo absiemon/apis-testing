@@ -6,7 +6,7 @@ export const DataContext = createContext(null);
 const DataProvider = ({ children }) => {
     
     const [formData, setFormData] = useState({ 
-        url: 'http://localhost:8000/v1/question', type: 'POST' 
+        url: 'http://localhost:8000/v1/question', type: 'GET' 
     })
 
     const [jsonText, setJsonText] = useState('');

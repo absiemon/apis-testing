@@ -41,14 +41,29 @@ const Home = () => {
         setErrorResponse(false);
         setLoading(true)
         let response = await getData(formData, jsonText, paramData, headerData);
-        console.log(response);
-        if (response === 'error') {
-            setErrorResponse(true);
+        
+        console.log(response)
+        const doc = new DOMParser().parseFromString(response.error, 'text/html');
+        console.log(doc.body.textContent);
+
+        if (response?.type === 'error') {
+            //checking if error contains html
+            const errorRes = response.error;
+            const containsHTML = (str) => /<\/?[a-z][\s\S]*>/i.test(str);
+            if (containsHTML(errorRes)) {
+                const doc = new DOMParser().parseFromString(response.error, 'text/html');
+                setApiResponse({message: doc.body.textContent, status: 'Not found'})
+            }
+            else{
+                setApiResponse(errorRes)
+            }
             setLoading(false)
             return;
         }
         setLoading(false)
         setApiResponse(response.data)
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+
     }
 
     return (
