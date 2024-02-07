@@ -14,7 +14,14 @@ import questionRoute from './router/questionRoute.js'
 
 // Reading json file available in data/data.json. All questions are there. Using this data.
 import { readFile } from 'fs/promises'; 
-const data = await readFile('./data/data.json', 'utf-8');
+import { fileURLToPath } from 'url';
+import { join, dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const dataPath = join(__dirname, 'data', 'data.json');
+const data = await readFile(dataPath, 'utf-8');
 const questionData = JSON.parse(data);
 
 // setting up express server
