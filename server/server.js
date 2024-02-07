@@ -37,7 +37,7 @@ app.use(morgan());
 app.disable('etag')
 
 //// setting up cors. Only allowed origin can make api request
-const allowedOrigins = ['http://localhost:3000'];
+const allowedOrigins = ['https://api-testing-63q1.onrender.com'];
 const corsOptions = {
     credentials: true,
     origin: allowedOrigins,
@@ -67,9 +67,6 @@ const addMockData = async () => {
   }
 };
 
-app.get('/', (req, res)=>{
-  return res.json({status:"true"})
-});
 //routes
 app.use('/v1/question', questionRoute);
 
